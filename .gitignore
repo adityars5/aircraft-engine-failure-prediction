@@ -1,0 +1,45 @@
+# Python & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# PyTorch & Model Checkpoints
+*.pt
+*.pth
+*.onnx
+models/*.pt
+models/*.pkl
+!models/.gitkeep
+
+# Datasets & Downloads
+data/*.txt
+data/*.csv
+data/*.zip
+!sample_data/*.txt
+!sample_data/*.csv
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & Cache
+*.log
+.cache/
+runs/

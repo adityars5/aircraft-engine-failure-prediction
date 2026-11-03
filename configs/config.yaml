@@ -1,0 +1,43 @@
+# Aircraft Turbofan Engine Failure Prediction Configuration
+project:
+  name: "Aircraft Engine RUL Prediction"
+  version: "1.0.0"
+  author: "adityars5"
+  domain: "Aerospace Predictive Maintenance"
+
+dataset:
+  name: "NASA C-MAPSS Turbofan Engine Degradation Simulation"
+  subset: "FD001" # Single operating condition (Sea Level), single fault mode (HPC Degradation)
+  num_train_units: 100
+  num_test_units: 100
+  piecewise_rul_clip: 125 # NASA industry standard upper bound for constant health stage
+  sequence_length: 30 # Time-window length for LSTM sequence modeling
+  
+features:
+  # Non-informative sensors with zero/negligible variance in FD001
+  drop_sensors: ["s1", "s5", "s10", "s16", "s18", "s19"]
+  rolling_windows: [5, 15]
+
+models:
+  baseline:
+    type: "RandomForestRegressor"
+    n_estimators: 150
+    max_depth: 18
+    min_samples_split: 4
+    random_state: 42
+    
+  lstm:
+    input_dim: 15 # Remaining active sensor channels
+    hidden_dim: 64
+    num_layers: 2
+    dropout: 0.2
+    learning_rate: 0.001
+    epochs: 45
+    batch_size: 64
+
+evaluation:
+  metrics:
+    - "RMSE"
+    - "MAE"
+    - "NASA_Score"
+    - "R2_Score"
